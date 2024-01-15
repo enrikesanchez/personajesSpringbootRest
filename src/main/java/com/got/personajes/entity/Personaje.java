@@ -4,12 +4,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 @Entity
 public class Personaje {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+    @NotNull(message = "Id es obligatorio")
     private Long id;
+    @NotEmpty(message = "Nombre es obligatorio")
     private String nombre;
+    @NotEmpty(message = "Apellido es obligatorio")
     private String apellido;
 
     public Personaje() {

@@ -40,6 +40,14 @@ public class PersonajesController {
         return new ResponseEntity<>(personajeAgregado, HttpStatus.CREATED);
     }
 
+    @PutMapping("/personajes/{id}")
+    public ResponseEntity<Personaje> updateById(@PathVariable("id") Long id, @RequestBody @Valid Personaje personajeActualizado) {
+        Optional<Personaje> personaje = personajesService.update(id, personajeActualizado);
+
+        return personaje.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
+    }
+
     @DeleteMapping("/personajes/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable("id") Long id) {
         Optional<Personaje> personaje = personajesService.delete(id);

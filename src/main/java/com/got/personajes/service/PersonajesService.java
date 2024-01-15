@@ -15,4 +15,8 @@ public class PersonajesService {
     public List<Personaje> findAll() {
         return personajesRepository.findAll();
     }
+
+    public Personaje add(final Personaje personajeNuevo) {
+        return personajesRepository.save(personajeNuevo);
+    }
 }

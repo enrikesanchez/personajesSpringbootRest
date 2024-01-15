@@ -6,9 +6,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("juego-de-tronos")
@@ -26,5 +29,13 @@ public class PersonajesController {
     public ResponseEntity<Personaje> create(@RequestBody @Valid Personaje personajeNuevo) {
         Personaje personajeAgregado = personajesService.add(personajeNuevo);
         return new ResponseEntity<>(personajeAgregado, HttpStatus.CREATED);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException manve) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("message", manve.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 }

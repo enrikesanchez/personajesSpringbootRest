@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("juego-de-tronos")
@@ -23,6 +24,14 @@ public class PersonajesController {
     public ResponseEntity<List<Personaje>> getAll() {
         List<Personaje> personajes = personajesService.findAll();
         return new ResponseEntity<>(personajes, HttpStatus.OK);
+    }
+
+    @GetMapping("/personajes/{id}")
+    public ResponseEntity<Personaje> getById(@PathVariable("id") Long id) {
+        Optional<Personaje> personaje = personajesService.findById(id);
+
+        return personaje.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
     }
 
     @PostMapping("/personajes")

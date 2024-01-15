@@ -24,4 +24,13 @@ public class PersonajesService {
     public Personaje add(final Personaje personajeNuevo) {
         return personajesRepository.save(personajeNuevo);
     }
+
+    public Optional<Personaje> delete(final Long id) {
+        Optional<Personaje> personajeEncontrado = personajesRepository.findById(id);
+
+        personajeEncontrado.ifPresent(personaje -> personajesRepository.delete(personaje));
+
+        return personajeEncontrado;
+    }
+
 }

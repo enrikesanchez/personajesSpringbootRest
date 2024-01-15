@@ -40,6 +40,14 @@ public class PersonajesController {
         return new ResponseEntity<>(personajeAgregado, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/personajes/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable("id") Long id) {
+        Optional<Personaje> personaje = personajesService.delete(id);
+
+        return personaje.map(value -> new ResponseEntity<>(HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException manve) {
         Map<String, Object> body = new HashMap<>();

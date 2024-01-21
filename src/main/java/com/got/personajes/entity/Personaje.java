@@ -1,9 +1,6 @@
 package com.got.personajes.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,6 +14,10 @@ public class Personaje {
     private String nombre;
     @NotEmpty(message = "Apellido es obligatorio")
     private String apellido;
+
+    @OneToOne
+    @JoinColumn(name = "mascotaId")
+    private Mascota mascota;
 
     public Personaje() {
     }
@@ -49,5 +50,13 @@ public class Personaje {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public Mascota getMascota() {
+        return mascota;
+    }
+
+    public void setMascota(Mascota mascota) {
+        this.mascota = mascota;
     }
 }

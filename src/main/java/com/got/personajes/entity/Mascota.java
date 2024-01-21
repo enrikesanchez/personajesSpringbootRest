@@ -1,9 +1,6 @@
 package com.got.personajes.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,6 +15,9 @@ public class Mascota {
     private String nombre;
     @NotEmpty(message = "Especie es obligatorio")
     private String especie;
+
+    @OneToOne(mappedBy = "mascota")
+    private Personaje personaje;
 
     public Mascota() {
     }

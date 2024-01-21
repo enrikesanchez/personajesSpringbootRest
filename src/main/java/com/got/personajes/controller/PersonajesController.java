@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("juego-de-tronos")
@@ -21,8 +18,15 @@ public class PersonajesController {
     PersonajesService personajesService;
 
     @GetMapping("/personajes")
-    public ResponseEntity<List<Personaje>> getAll() {
-        List<Personaje> personajes = personajesService.findAll();
+    public ResponseEntity<List<Personaje>> getAll(@RequestParam(required = false) Optional<Long> casaId) {
+        List<Personaje> personajes = new ArrayList<>();
+
+        if (casaId.isPresent()) {
+            personajes = personajesService.findByCasaId(casaId.get());
+        } else {
+            personajes = personajesService.findAll();
+        }
+
         return new ResponseEntity<>(personajes, HttpStatus.OK);
     }
 

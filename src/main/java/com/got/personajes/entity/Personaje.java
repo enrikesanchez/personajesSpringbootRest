@@ -19,6 +19,10 @@ public class Personaje {
     @JoinColumn(name = "mascotaId")
     private Mascota mascota;
 
+    @ManyToOne
+    @JoinColumn(name="casaId")
+    private Casa casa;
+
     public Personaje() {
     }
 
@@ -58,5 +62,13 @@ public class Personaje {
 
     public void setMascota(Mascota mascota) {
         this.mascota = mascota;
+    }
+
+    public Casa getCasa() {
+        return casa;
+    }
+
+    public void setCasa(Casa casa) {
+        this.casa = casa;
     }
 }
